@@ -1,0 +1,5 @@
+# Ignorar todo el contenido de la carpeta de trabajo del agente
+/app-workspace/*
+
+# ... excepto el README.md que sirve de placeholder
+!/app-workspace/README.md

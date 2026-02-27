@@ -3,3 +3,24 @@
 
 # ... excepto el README.md que sirve de placeholder
 !/app-workspace/README.md
+
+# Archivos de configuración y de AI que contengan credenciales o secretos
+docs/MCP_CONFIG.json
+
+# Entorno y Secretos locales
+.env
+.env.*
+!.env.example
+
+# Directorios de dependencias y build
+node_modules/
+dist/
+build/
+.next/
+coverage/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log

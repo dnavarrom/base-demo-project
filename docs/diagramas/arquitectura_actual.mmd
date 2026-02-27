@@ -1,0 +1,59 @@
+graph TD
+    %% Estilos Globales para Excalidraw/Mermaid
+    classDef client fill:#3b82f6,stroke:#1d4ed8,stroke-width:2px,color:#fff,rx:8,ry:8;
+    classDef backend fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff,rx:8,ry:8;
+    classDef db fill:#f59e0b,stroke:#b45309,stroke-width:2px,color:#fff,rx:8,ry:8;
+    classDef service fill:#6366f1,stroke:#4338ca,stroke-width:2px,color:#fff,rx:8,ry:8;
+    classDef firewall fill:#ef4444,stroke:#b91c1c,stroke-width:2px,color:#fff,stroke-dasharray: 5 5;
+
+    %% Nodos Principales
+    subgraph "Frontend Layer (Port 3001) - Container: web"
+        P1["Next.js React Client\n(App Router + Framer Motion)"]:::client
+        P2["Local Storage\n(JWT Auth Token)"]:::client
+        P1 <--> P2
+    end
+
+    subgraph "API Layer (Port 3000) - Container: api"
+        subgraph "Middlewares"
+            M1["CORS Middleware"]:::firewall
+            M2["Auth JWT Middleware\n(Securiza Endpoints)"]:::firewall
+        end
+
+        subgraph "Controllers"
+            C1["AuthController\n(login)"]:::backend
+            C2["InventoryController\n(list, extract, create, history)"]:::backend
+        end
+
+        subgraph "Services (Business Logic)"
+            S1["AuthService\n(bcrypt / jwt sign)"]:::service
+            S2["InventoryService\n(Atomic validations)"]:::service
+        end
+
+        subgraph "Repositories (Data Access)"
+            R1["AuthRepository"]:::backend
+            R2["InventoryRepository"]:::backend
+            ORM["Prisma Client ORM"]:::backend
+        end
+
+        %% Flujos Internos de la API
+        M1 --> M2
+        M2 --> C1
+        M2 --> C2
+        
+        C1 --> S1
+        C2 --> S2
+        
+        S1 --> R1
+        S2 --> R2
+        
+        R1 --> ORM
+        R2 --> ORM
+    end
+
+    subgraph "Data Layer (Port 5432) - Container: db"
+        DB1[("PostgreSQL\nUser, Product, Transaction")]:::db
+    end
+
+    %% Conexiones Maestras
+    P1 -- "HTTP POST/GET\n(Bearer Token)" --> M1
+    ORM -- "TCP/IP Prisma Engine\n(Database_URL)" --> DB1

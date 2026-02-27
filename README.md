@@ -9,10 +9,11 @@ Aprenderás a planificar, diseñar y dirigir a un Agente IA para construir un **
 
 ## Estructura de este Repositorio
 
-El proyecto se divide en dos partes principales:
+El proyecto se divide en partes principales:
 
-1. **`/docs`**: Contiene todo el material teórico, plantillas y **prompts** que tú, como humano, utilizarás para dirigir al Agente.
-2. **`/app-workspace`**: Es el directorio de trabajo donde la IA escribirá el código fuente de la aplicación real.
+1. **`AGENT_HINTS.md` (Raíz)**: Un archivo global de directivas que la IA debe leer automáticamente para no cometer "errores de principiante" al configurar los módulos (como el uso estricto de ESM en Node.js o App Router en Next.js).
+2. **`/docs`**: Contiene todo el material teórico, plantillas y **prompts** que tú, como humano, utilizarás para dirigir al Agente.
+3. **`/app-workspace`**: Es el directorio de trabajo donde la IA escribirá el código fuente de la aplicación real.
 
 ### Flujo de Trabajo (Tu rol como Director)
 
